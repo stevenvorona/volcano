@@ -9,6 +9,7 @@ app = Flask(__name__)
 @app.route('/phoneSignup', methods = ['POST'])
 def get_users():
     data = request.form
+    print data
     users = [
         {
             'name': 'exampleUser',
