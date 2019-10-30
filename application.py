@@ -1,3 +1,5 @@
+from __future__ import print_function
+import sys
 import json
 import requests
 
@@ -9,15 +11,8 @@ app = Flask(__name__)
 @app.route('/phoneSignup', methods = ['POST'])
 def addNewPhoneNumber():
     data = request.form
-    print(data, file=sys.stderr)
-    users = [
-        {
-            'name': 'exampleUser',
-            'display_name': 'Jane Doe',
-            'email': 'user@example.com'
-        }
-    ]
+    print(data.items(),file=sys.stderr)
     return json.dumps(data)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
