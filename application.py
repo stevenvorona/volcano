@@ -7,9 +7,9 @@ from flask import request
 app = Flask(__name__)
 
 @app.route('/phoneSignup', methods = ['POST'])
-def get_users():
+def addNewPhoneNumber():
     data = request.form
-    print data
+    print(data, file=sys.stderr)
     users = [
         {
             'name': 'exampleUser',
