@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 @app.route('/phoneSignup', methods = ['POST'])
 def addNewPhoneNumber():
+    print(request.data,file=sys.stderr)
     data = request.form
     print(data.items(),file=sys.stderr)
     return json.dumps(data)
