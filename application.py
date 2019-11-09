@@ -6,13 +6,14 @@ import requests
 from flask import Flask
 from flask import request
 
+import mysql.connector
+
 app = Flask(__name__)
 
 @app.route('/phoneSignup', methods = ['POST'])
 def addNewPhoneNumber():
     print(request.data,file=sys.stderr)
-    data = request.form
-    print(data.items(),file=sys.stderr)
+    data = request.data
     return json.dumps(data)
 
 if __name__ == '__main__':
