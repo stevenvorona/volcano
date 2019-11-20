@@ -20,16 +20,20 @@ def addNewPhoneNumber():
 def createGroup():
     #host posts phone number to /createGroup, function hashes it to ID, creates file in session directory headed with ID, return hashed ID
     print(request.data,file=sys.stderr)
-    print(hostPhoneNumber,file=sys.stderr)
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    print("group created under host phone" + hostPhoneNumber,file=sys.stderr)
     data = request.data
+    os.system("sessions/scripts/createsession.py "+hostPhoneNumber)
+    groupUrl = "/joinGroup?host="+hostPhoneNumber
     #return style: POST route of http://api/joinGroup?hostphonenumber=hashedHostID
-    return json.dumps(data)
+    return json.dumps(groupUrl);
 
 @app.route('/joinGroup', methods = ['POST'])
-def createGroup():
+def joinGroup():
     hostPhoneNumber = request.args.get('hostphonenumber')
     #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
     print(request.data,file=sys.stderr)
+    os.system("sessions/scripts/addtosession.py " + friendPhoneNumber)
     #friend phone number is a component of data
     print(hostPhoneNumber,file=sys.stderr)
     #write friend phone number into file
