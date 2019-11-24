@@ -2,6 +2,7 @@ from __future__ import print_function
 import sys
 import json
 import requests
+import os
 
 from flask import Flask
 from flask import request
@@ -23,7 +24,7 @@ def createGroup():
     hostPhoneNumber = request.args.get('hostphonenumber')
     print("group created under host phone" + hostPhoneNumber,file=sys.stderr)
     data = request.data
-    os.system("sessions/scripts/createsession.py "+hostPhoneNumber)
+    os.system("python sessions/scripts/createsession.py "+hostPhoneNumber)
     groupUrl = "/joinGroup?host="+hostPhoneNumber
     #return style: POST route of http://api/joinGroup?hostphonenumber=hashedHostID
     return json.dumps(groupUrl);
@@ -31,9 +32,11 @@ def createGroup():
 @app.route('/joinGroup', methods = ['POST'])
 def joinGroup():
     hostPhoneNumber = request.args.get('hostphonenumber')
+    friendPhoneNumber = request.args.get('friendphonenumber')
     #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
     print(request.data,file=sys.stderr)
-    os.system("sessions/scripts/addtosession.py " + friendPhoneNumber)
+    os.system("sudo python sessions/scripts/addtosession.py " + hostPhoneNumber + " " +  friendPhoneNumber)
+    print("Added friend to group session file with numnber: " + friendPhoneNumber,file=sys.stderr);
     #friend phone number is a component of data
     print(hostPhoneNumber,file=sys.stderr)
     #write friend phone number into file
