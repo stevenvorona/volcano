@@ -43,5 +43,24 @@ def joinGroup():
     data = request.data
     return json.dumps(data)
 
+@app.route('/getUserCount', methods = ['POST'])
+def getUserCount():
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
+    print(request.data,file=sys.stderr)
+    print("getusercount.py using this this phone number ->" + hostPhoneNumber, file=sys.stderr)
+
+    count = 0
+    thefile = open("sessions/"+ hostPhoneNumber+".txt","rb")
+    while 1:
+        buffer = thefile.read(8192*1024)
+        if not buffer: break
+        count += buffer.count('\n')
+    thefile.close(  )
+    #friend phone number is a component of data
+    print(count,file=sys.stderr)
+    #write friend phone number into file
+    return json.dumps(count)
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
