@@ -111,7 +111,7 @@ def checkSymmetry():
         thefile.close(  )
         if(countCurrent/2 == countBase):
             break
-    return True
+    return json.dumps("Worked")
 
 
 if __name__ == '__main__':
