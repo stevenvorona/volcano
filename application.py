@@ -86,34 +86,31 @@ def checkComplete():
     #write friend phone number into file
     return json.dumps(data)
 
-@app.route('/checkSymmetry', methods = ['GET'])
+@app.route('/checkSymmetry', methods = ['POST'])
 def checkSymmetry():
     hostPhoneNumber = request.args.get('hostphonenumber')
-    #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
-    print(request.data,file=sys.stderr)
     print("checking count symmetry on: " + hostPhoneNumber, file=sys.stderr)
-    countInitial = 0
-    thefile = open("sessions/"+ hostPhoneNumber+".txt","rb")
-    while 1:
-        buffer = thefile.read(8192*1024)
-        if not buffer: break
-        countInitial += buffer.count('\n')
-    thefile.close(  )
-    #friend phone number is a component of data
-    print("OG file has: " + countInitial,file=sys.stderr)
+    while(True):
+        countBase = 1
+        countSubmitted = 0
+        thefile = open("sessions/"+ hostPhoneNumber+".txt","rb")
+        while 1:
+            buffer = thefile.read(8192*1024)
+            if not buffer: break
+            countInitial += buffer.count('\n')
+        thefile.close(  )
+        #friend phone number is a component of data
+        print("OG file has: " + countInitial,file=sys.stderr)
 
-    countCurrent = 0
-    thefile = open("sessions/"+ hostPhoneNumber+"prefs.txt","rb")
-    while 1:
-        buffer = thefile.read(8192*1024)
-        if not buffer: break
-        countCurrent += buffer.count('\n')
-    thefile.close(  )
-
-    if(countCurrent/2 == countInitial):
-        return True
-    else:
-        return False
+        countCurrent = 0
+        thefile = open("sessions/"+ hostPhoneNumber+"prefs.txt","rb")
+        while 1:
+            buffer = thefile.read(8192*1024)
+            if not buffer: break
+            countCurrent += buffer.count('\n')
+        thefile.close(  )
+        if(countCurrent/2 == countInitial):
+            break
 
 
 if __name__ == '__main__':
