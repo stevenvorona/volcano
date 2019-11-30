@@ -65,8 +65,19 @@ def getUserCount():
 @app.route('/receivePrefs', methods = ['POST'])
 def receivePrefs():
     hostPhoneNumber = request.args.get('hostphonenumber')
-    phoneNumber = request.args.get('hostphonenumber')
-    prefBinary = request.args.get('preferences')
+    phoneNumber = request.args.get('phonenumber')
+    #prefBinary = request.args.get('preferences')
+    data=request.data
+    print(request.data,file=sys.stderr)
+    print("addprefs.py using this this host phone number ->" + hostPhoneNumber, file=sys.stderr)
+    #os.system("sudo python sessions/scripts/addprefs.py " + hostPhoneNumber  + " " + phoneNumber + " " + prefBinary)
+    os.system("sudo python sessions/scripts/addprefs.py " + hostPhoneNumber  + " " + phoneNumber)
+    #write friend phone number into file
+    return json.dumps(data)
+
+@app.route('/checkComplete', methods = ['GET'])
+def checkComplete():
+    hostPhoneNumber = request.args.get('hostphonenumber')
     #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
     data=request.data
     print(request.data,file=sys.stderr)
@@ -74,6 +85,36 @@ def receivePrefs():
     os.system("sudo python sessions/scripts/addprefs.py " + hostPhoneNumber  + " " + phoneNumber + " " + prefBinary)
     #write friend phone number into file
     return json.dumps(data)
+
+@app.route('/checkSymmetry', methods = ['GET'])
+def checkSymmetry():
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
+    print(request.data,file=sys.stderr)
+    print("checking count symmetry on: " + hostPhoneNumber, file=sys.stderr)
+    countInitial = 0
+    thefile = open("sessions/"+ hostPhoneNumber+".txt","rb")
+    while 1:
+        buffer = thefile.read(8192*1024)
+        if not buffer: break
+        countInitial += buffer.count('\n')
+    thefile.close(  )
+    #friend phone number is a component of data
+    print("OG file has: " + countInitial,file=sys.stderr)
+
+    countCurrent = 0
+    thefile = open("sessions/"+ hostPhoneNumber+"prefs.txt","rb")
+    while 1:
+        buffer = thefile.read(8192*1024)
+        if not buffer: break
+        countCurrent += buffer.count('\n')
+    thefile.close(  )
+
+    if(countCurrent/2 == countInitial):
+        return True
+    else:
+        return False
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)

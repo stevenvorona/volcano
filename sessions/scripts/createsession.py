@@ -7,5 +7,5 @@ os.system("sudo rm -r sessions/" + phonenumber + ".txt")
 os.system("touch sessions/" + phonenumber + ".txt")
 
 #creates preferences sheet for group
-os.system("sudo rm -r sessions/" + phonenumber + "prefs.txt")
-os.system("touch sessions/" + phonenumber + "prefs.txt")
+os.system("sudo rm -r sessions/"+phonenumber+"prefs.txt")
+os.system("touch sessions/"+phonenumber+"prefs.txt")
