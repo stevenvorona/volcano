@@ -100,7 +100,7 @@ def checkSymmetry():
             countBase += buffer.count('\n')
         thefile.close(  )
         #friend phone number is a component of data
-        print("OG file has: " + countBase,file=sys.stderr)
+        print("OG file has: " + str(countBase),file=sys.stderr)
 
         countCurrent = 0
         thefile = open("sessions/"+ hostPhoneNumber+"prefs.txt","rb")
