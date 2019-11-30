@@ -62,5 +62,18 @@ def getUserCount():
     #write friend phone number into file
     return json.dumps(count)
 
+@app.route('/receivePrefs', methods = ['POST'])
+def receivePrefs():
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    phoneNumber = request.args.get('hostphonenumber')
+    prefBinary = request.args.get('preferences')
+    #POST friend phone number to http://api/joinGroup?hostphonenumber=hashedHostID
+    data=request.data
+    print(request.data,file=sys.stderr)
+    print("addprefs.py using this this phone number ->" + phoneNumber, file=sys.stderr)
+    os.system("sudo python sessions/scripts/addprefs.py " + hostPhoneNumber  + " " + phoneNumber + " " + prefBinary)
+    #write friend phone number into file
+    return json.dumps(data)
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
