@@ -3,6 +3,7 @@ import sys
 import json
 import requests
 import os
+import time
 
 from flask import Flask
 from flask import request
@@ -111,6 +112,7 @@ def checkSymmetry():
         thefile.close(  )
         if(countCurrent/2 == countBase):
             break
+        time.sleep(0.5)
     return json.dumps("Worked")
 
 
