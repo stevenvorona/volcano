@@ -97,7 +97,7 @@ def checkSymmetry():
         while 1:
             buffer = thefile.read(8192*1024)
             if not buffer: break
-            countInitial += buffer.count('\n')
+            countBase += buffer.count('\n')
         thefile.close(  )
         #friend phone number is a component of data
         print("OG file has: " + countInitial,file=sys.stderr)
@@ -109,8 +109,9 @@ def checkSymmetry():
             if not buffer: break
             countCurrent += buffer.count('\n')
         thefile.close(  )
-        if(countCurrent/2 == countInitial):
+        if(countCurrent/2 == countBase):
             break
+    return True
 
 
 if __name__ == '__main__':
