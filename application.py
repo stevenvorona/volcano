@@ -115,7 +115,7 @@ def checkSymmetry():
         if(countCurrent/2 == countBase):
             break
         time.sleep(0.5)
-    if hostPhoneNumber = myPhoneNumber:
+    if hostPhoneNumber == myPhoneNumber:
         os.system("sudo touch sessions/" + hostPhoneNumber + "choice.txt")
         f = open("sessions/"+ hostPhoneNumber+"choice.txt","a")
         movieRng = str(random.randrange(0,9))
