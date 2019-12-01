@@ -114,6 +114,7 @@ def checkSymmetry():
         thefile.close(  )
         if(countCurrent == countBase*2):
             break
+        time.sleep(0.25)
     if hostPhoneNumber == myPhoneNumber:
         os.system("sudo touch sessions/" + hostPhoneNumber + "choice.txt")
         os.system("sudo python sessions/scripts/makechoice.py " + hostPhoneNumber)
