@@ -113,15 +113,16 @@ def checkSymmetry():
             countCurrent += buffer.count('\n')
         thefile.close(  )
         if(countCurrent == countBase*2):
-            if hostPhoneNumber == myPhoneNumber:
-                os.system("sudo touch sessions/" + hostPhoneNumber + "choice.txt")
-                os.system("sudo python sessions/scripts/makechoice.py " + hostPhoneNumber)
-                f = open("sessions/"+ hostPhoneNumber+"choice.txt","rb")
-                movieRng = f.readline()
-                print("Selected movie has index: " + movieRng,file=sys.stderr)
-                f.close()
-                return json.dumps(movieRng)
-            return "Worked"
+            break
+    if hostPhoneNumber == myPhoneNumber:
+        os.system("sudo touch sessions/" + hostPhoneNumber + "choice.txt")
+        os.system("sudo python sessions/scripts/makechoice.py " + hostPhoneNumber)
+        f = open("sessions/"+ hostPhoneNumber+"choice.txt","rb")
+        movieRng = f.readline()
+        print("Selected movie has index: " + movieRng,file=sys.stderr)
+        f.close()
+        return json.dumps(movieRng)
+    return "Worked"
 
 
 if __name__ == '__main__':
