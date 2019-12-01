@@ -123,7 +123,7 @@ def checkSymmetry():
         print("Selected movie has index: " + movieRng,file=sys.stderr)
         f.close()
         return json.dumps(movieRng)
-    return "Worked"
+    return json.dumps("worked")
 
 
 if __name__ == '__main__':
