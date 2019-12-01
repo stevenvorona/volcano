@@ -112,7 +112,7 @@ def checkSymmetry():
             if not buffer: break
             countCurrent += buffer.count('\n')
         thefile.close(  )
-        if(countCurrent/2 == countBase):
+        if(countCurrent == countBase*2):
             break
     if hostPhoneNumber == myPhoneNumber:
         os.system("sudo touch sessions/" + hostPhoneNumber + "choice.txt")
