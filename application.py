@@ -4,6 +4,7 @@ import json
 import requests
 import os
 import time
+import random
 
 from flask import Flask
 from flask import request
@@ -90,6 +91,7 @@ def checkComplete():
 @app.route('/checkSymmetry', methods = ['POST'])
 def checkSymmetry():
     hostPhoneNumber = request.args.get('hostphonenumber')
+    myPhoneNumber = request.args.get('phonenumber')
     print("checking count symmetry on: " + hostPhoneNumber, file=sys.stderr)
     while(True):
         countBase = 1
@@ -113,7 +115,14 @@ def checkSymmetry():
         if(countCurrent/2 == countBase):
             break
         time.sleep(0.5)
-    return json.dumps("Worked")
+    if hostPhoneNumber = myPhoneNumber:
+        os.system("sudo touch sessions/" + hostPhoneNumber + "choice.txt")
+        f = open("sessions/"+ hostPhoneNumber+"choice.txt","a")
+        movieRng = str(random.randrange(0,9))
+        f.write(movieRng)
+        print("Selected movie has index: " + movieRng,file=sys.stderr)
+        f.close()
+    return json.dumps(movieRng)
 
 
 if __name__ == '__main__':
