@@ -136,7 +136,7 @@ def checkStackComplete():
     myPhoneNumber = request.args.get('phonenumber')
     print("checking count card stack on: " + hostPhoneNumber, file=sys.stderr)
     while(True):
-        countBase = 0
+        countBase = 1
         countSubmitted = 0
         thefile = open("sessions/"+ hostPhoneNumber+".txt","rb")
         while 1:
