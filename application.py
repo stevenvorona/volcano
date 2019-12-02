@@ -167,6 +167,11 @@ def checkStackComplete():
         return json.dumps(movieRng)
     return json.dumps("worked")
 
-
+@app.route('/checkChoice', methods = ['POST'])
+def checkChoice():
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    thefile = open("sessions/"+ hostPhoneNumber+"choice.txt","rb")
+    myChoice = f.readline()
+    return json.dumps(myChoice)
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
