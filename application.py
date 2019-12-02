@@ -173,6 +173,7 @@ def checkChoice():
     f = open("sessions/"+ hostPhoneNumber+"choice.txt","rb")
     myChoice = f.readline()
     f.close()
+    print("CHECKING CHOICE, INDEX OF: " + myChoice,file=sys.stderr)
     return json.dumps(myChoice)
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
