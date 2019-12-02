@@ -145,7 +145,7 @@ def checkStackComplete():
             countBase += buffer.count('\n')
         thefile.close(  )
         #friend phone number is a component of data
-        print("OG file has: " + str(countBase),file=sys.stderr)
+        print("Checking complete stack, OG file has: " + str(countBase),file=sys.stderr)
 
         countCurrent = 0
         thefile = open("sessions/"+ hostPhoneNumber+"stack.txt","rb")
