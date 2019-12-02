@@ -77,6 +77,19 @@ def receivePrefs():
     #write friend phone number into file
     return json.dumps(data)
 
+@app.route('/receiveStack', methods = ['POST'])
+def receiveStack():
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    phoneNumber = request.args.get('phonenumber')
+    #prefBinary = request.args.get('preferences')
+    data=request.data
+    print(request.data,file=sys.stderr)
+    print("addtostack.py using this this host phone number ->" + hostPhoneNumber, file=sys.stderr)
+    #os.system("sudo python sessions/scripts/addprefs.py " + hostPhoneNumber  + " " + phoneNumber + " " + prefBinary)
+    os.system("sudo python sessions/scripts/addtostack.py " + hostPhoneNumber  + " " + phoneNumber)
+    #write friend phone number into file
+    return json.dumps(data)
+
 @app.route('/checkComplete', methods = ['GET'])
 def checkComplete():
     hostPhoneNumber = request.args.get('hostphonenumber')
@@ -107,6 +120,35 @@ def checkSymmetry():
 
         countCurrent = 0
         thefile = open("sessions/"+ hostPhoneNumber+"prefs.txt","rb")
+        while 1:
+            buffer = thefile.read(8192*1024)
+            if not buffer: break
+            countCurrent += buffer.count('\n')
+        thefile.close(  )
+        if(countCurrent == countBase*2):
+            break
+        time.sleep(0.25)
+    return json.dumps("worked")
+
+@app.route('/checkStackComplete', methods = ['POST'])
+def checkStackComplete():
+    hostPhoneNumber = request.args.get('hostphonenumber')
+    myPhoneNumber = request.args.get('phonenumber')
+    print("checking count card stack on: " + hostPhoneNumber, file=sys.stderr)
+    while(True):
+        countBase = 1
+        countSubmitted = 0
+        thefile = open("sessions/"+ hostPhoneNumber+".txt","rb")
+        while 1:
+            buffer = thefile.read(8192*1024)
+            if not buffer: break
+            countBase += buffer.count('\n')
+        thefile.close(  )
+        #friend phone number is a component of data
+        print("OG file has: " + str(countBase),file=sys.stderr)
+
+        countCurrent = 0
+        thefile = open("sessions/"+ hostPhoneNumber+"stack.txt","rb")
         while 1:
             buffer = thefile.read(8192*1024)
             if not buffer: break
